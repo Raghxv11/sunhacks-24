@@ -6,10 +6,12 @@ import { ContainerScroll } from "@/components/global/container-scroll-animation"
 import { LampComponent } from "@/components/global/lamp";
 import { Button } from "@/components/ui/button";
 import { products } from "@/lib/constants";
+import { useState } from "react";
 
 export default function Home() {
-  // Define the API fetching function without async/await
-  const fetchApi = () => {
+  const [pincode, setPincode] = useState("");
+
+  const fetchApi = async (pincode: string) => {
     fetch("/api/test", {
       method: "POST",
       headers: {
@@ -18,6 +20,7 @@ export default function Home() {
       body: JSON.stringify({
         crimeDataUrl:
           "https://firebasestorage.googleapis.com/v0/b/binsr-484d7.appspot.com/o/crime-data_crime-data_crimestat.csv?alt=media&token=21120ded-08ae-464c-a9ca-4f88b3ad491f",
+        pincode: pincode,
       }),
     })
       .then((response) => response.json())
@@ -39,7 +42,6 @@ export default function Home() {
           <ContainerScroll
             titleComponent={
               <div className="flex flex-col items-center">
-                {/* Removed onClick handler from the Get Demo button */}
                 <Button
                   size={"lg"}
                   className="group mb-8 flex w-full items-center justify-center gap-4 rounded-full border-t-2 border-[#4D4D4D] bg-[#1F1F1F] p-8 text-2xl transition-all duration-500 hover:bg-white hover:shadow-xl hover:shadow-neutral-500 sm:w-fit md:mb-0"
@@ -63,7 +65,7 @@ export default function Home() {
       <section>
         <LampComponent />
       </section>
-      
+
       {/* Input Field Section */}
       <div className="relative mt-10 flex items-center justify-center">
         {/* Grid Background */}
@@ -91,6 +93,8 @@ export default function Home() {
               type="text"
               name="text"
               className="h-[56px] w-[601px] rounded-[10px] border-none bg-[#010201] px-[59px] text-[18px] text-white placeholder:text-[#c0b9c0] focus:outline-none"
+              value={pincode}
+              onChange={(e) => setPincode(e.target.value)}
             />
 
             {/* Input Mask */}
@@ -112,7 +116,7 @@ export default function Home() {
             <div
               id="filter-icon"
               className="absolute top-[8px] right-[8px] z-[2] flex h-full w-full max-h-[40px] max-w-[38px] items-center justify-center overflow-hidden rounded-[10px] border border-transparent bg-gradient-to-b from-[#161329] via-black to-[#1d1b4b] isolation-auto"
-              onClick={fetchApi} // Attach the onClick handler here
+              onClick={async () => await fetchApi(pincode)} // Pass pincode here
             >
               {/* SVG content */}
             </div>

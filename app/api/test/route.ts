@@ -7,7 +7,7 @@ export const maxDuration = 300;
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const { crimeDataUrl } = await req.json();
+    const { crimeDataUrl, pincode } = await req.json();
 
     const crimeData = await loadCrimeData(crimeDataUrl);
     const classifiedCrimeData = classifyCrime(crimeData);
@@ -16,19 +16,31 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     const model = trainCrimeClassifier(features);
     const predictedCrimeLevels = predictCrimeLevels(features, model);
 
+    // Filter data based on pincode
+    let filteredAggregatedCrimes = aggregatedCrimes;
+    let filteredPredictedCrimeLevels = predictedCrimeLevels;
+    if (pincode) {
+      filteredAggregatedCrimes = aggregatedCrimes.filter(
+        (item) => item.ZIP === pincode
+      );
+      filteredPredictedCrimeLevels = predictedCrimeLevels.filter(
+        (item) => item.ZIP === pincode
+      );
+    }
+
     return NextResponse.json({
       status: 200,
       data: {
-        aggregatedCrimes,
-        predictedCrimeLevels,
-      }
+        aggregatedCrimes: filteredAggregatedCrimes,
+        predictedCrimeLevels: filteredPredictedCrimeLevels,
+      },
     });
   } catch (error) {
     console.error(error);
     return NextResponse.json({
       status: 500,
       data: null,
-      error: "An error occurred while processing the crime data."
+      error: "An error occurred while processing the crime data.",
     });
   }
 }
@@ -80,7 +92,6 @@ function setCrimeLevelThresholds(features: any[]): number[] {
 
   return [q1, q2, q3];
 }
-
 
 function aggregateCrimesByZip(crimeData: any[]): any[] {
   const zipCodes = [...Array(99)].map((_, i) => 85001 + i).concat([...Array(10)].map((_, i) => 85280 + i));
@@ -144,8 +155,7 @@ function predictCrimeLevels(features: any[], model: RandomForestClassifier): any
   }));
 }
 
-
-//Mock Testing
+// Mock Testing
 const mockCrimeData = `
 ZIP,UCR CRIME CATEGORY
 85001,MURDER
