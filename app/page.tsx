@@ -1,50 +1,49 @@
 "use client";
 
 import Navbar from "@/components/global/navbar";
-
 import { HeroParallax } from "@/components/global/connect-parallax";
 import { ContainerScroll } from "@/components/global/container-scroll-animation";
-import { InfiniteMovingCards } from "@/components/global/infinite-moving-cards";
 import { LampComponent } from "@/components/global/lamp";
 import { Button } from "@/components/ui/button";
 import { products } from "@/lib/constants";
 
 export default function Home() {
-  //WIP: remove fault IMAge for home page
+  // Define the API fetching function
+  const fetchApi = async () => {
+    const data = await fetch("/api/test", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        crimeDataUrl:
+          "https://firebasestorage.googleapis.com/v0/b/binsr-484d7.appspot.com/o/crime-data_crime-data_crimestat.csv?alt=media&token=21120ded-08ae-464c-a9ca-4f88b3ad491f",
+      }),
+    });
+    const json = await data.json();
+    console.log(json);
+  };
+
   return (
-    <main className="flex items-center justify-center flex-col">
+    <main className="flex flex-col items-center justify-center">
       <Navbar />
-      <section className="h-screen w-full  bg-neutral-950 rounded-md  !overflow-visible relative flex flex-col items-center  antialiased">
-        <div className="absolute inset-0  h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_35%,#223_100%)]"></div>
-        <div className="flex flex-col mt-[-100px] md:mt-[-50px]">
+      <section className="relative flex h-screen w-full flex-col items-center overflow-visible rounded-md bg-neutral-950 antialiased">
+        <div className="absolute inset-0 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_35%,#223_100%)]"></div>
+        <div className="mt-[-100px] flex flex-col md:mt-[-50px]">
           <ContainerScroll
             titleComponent={
-              <div className="flex items-center flex-col">
+              <div className="flex flex-col items-center">
                 <Button
                   size={"lg"}
-                  className="p-8 mb-8 md:mb-0 text-2xl w-full sm:w-fit border-t-2 rounded-full border-[#4D4D4D] bg-[#1F1F1F] hover:bg-white group transition-all flex items-center justify-center gap-4 hover:shadow-xl hover:shadow-neutral-500 duration-500"
+                  className="group mb-8 flex w-full items-center justify-center gap-4 rounded-full border-t-2 border-[#4D4D4D] bg-[#1F1F1F] p-8 text-2xl transition-all duration-500 hover:bg-white hover:shadow-xl hover:shadow-neutral-500 sm:w-fit md:mb-0"
                 >
                   <span
-                    className="bg-clip-text text-transparent bg-gradient-to-r from-neutral-500 to-neutral-600  md:text-center font-sans group-hover:bg-gradient-to-r group-hover:from-black goup-hover:to-black"
-                    onClick={async () => {
-                      const data = await fetch("/api/test", {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                          crimeDataUrl:
-                            "https://firebasestorage.googleapis.com/v0/b/binsr-484d7.appspot.com/o/crime-data_crime-data_crimestat.csv?alt=media&token=21120ded-08ae-464c-a9ca-4f88b3ad491f",
-                        }),
-                      });
-                      const json = await data.json();
-                      console.log(json);
-                    }}
+                    className="bg-gradient-to-r from-neutral-500 to-neutral-600 bg-clip-text font-sans text-transparent group-hover:bg-gradient-to-r group-hover:from-black group-hover:to-black md:text-center"
                   >
                     Get Demo
                   </span>
                 </Button>
-                <h1 className="text-5xl md:text-8xl  bg-clip-text text-transparent bg-gradient-to-b from-white to-neutral-600 font-sans font-bold">
+                <h1 className="bg-gradient-to-b from-white to-neutral-600 bg-clip-text font-sans text-5xl font-bold text-transparent md:text-8xl">
                   Arizona State University Saviors
                 </h1>
               </div>
@@ -52,162 +51,74 @@ export default function Home() {
           />
         </div>
       </section>
-      {/* <InfiniteMovingCards
-        className="md:mt-[18rem] mt-[-100px]"
-        items={clients}
-        direction="right"
-        speed="slow"
-      /> */}
-      <section className="md:mt-[18rem] mt-[-100px]">
-        <HeroParallax products={products}></HeroParallax>
+
+      <section className="mt-[-100px] md:mt-[18rem]">
+        <HeroParallax products={products} />
       </section>
       <section>
         <LampComponent />
-        {/* <div className="flex flex-wrap items-center justify-center flex-col md:flex-row gap-8 -mt-72">
-          <CardContainer className="inter-var ">
-            <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-neutral-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full md:!w-[350px] h-auto rounded-xl p-6 border">
-              <CardItem
-                translateZ="50"
-                className="text-xl font-bold text-neutral-600 dark:text-white "
-              >
-                Hobby
-                <h2 className="text-6xl ">$0</h2>
-              </CardItem>
-              <CardItem
-                translateZ="60"
-                className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
-              >
-                Get a glimpse of what our software is capable of. Just a heads
-                up {"you'll"} never leave us after this!
-                <ul className="my-4 flex flex-col gap-2">
-                  <li className="flex items-center gap-2">
-                    <CheckIcon />3 Free automations
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckIcon />
-                    100 tasks per month
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckIcon />
-                    Two-step Actions
-                  </li>
-                </ul>
-              </CardItem>
-              <div className="flex justify-between items-center mt-8">
-                <CardItem
-                  translateZ={20}
-                  as="button"
-                  className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
-                >
-                  Try now →
-                </CardItem>
-                <CardItem
-                  translateZ={20}
-                  as="button"
-                  className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
-                >
-                  Get Started Now
-                </CardItem>
-              </div>
-            </CardBody>
-          </CardContainer>
-          <CardContainer className="inter-var ">
-            <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-neutral-500/[0.1] dark:bg-black dark:border-[#E2CBFF] border-black/[0.1] w-full md:!w-[350px] h-auto rounded-xl p-6 border">
-              <CardItem
-                translateZ="50"
-                className="text-xl font-bold text-neutral-600 dark:text-white "
-              >
-                Pro Plan
-                <h2 className="text-6xl ">$29</h2>
-              </CardItem>
-              <CardItem
-                translateZ="60"
-                className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
-              >
-                Get a glimpse of what our software is capable of. Just a heads
-                up {"you'll"} never leave us after this!
-                <ul className="my-4 flex flex-col gap-2">
-                  <li className="flex items-center gap-2">
-                    <CheckIcon />3 Free automations
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckIcon />
-                    100 tasks per month
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckIcon />
-                    Two-step Actions
-                  </li>
-                </ul>
-              </CardItem>
-              <div className="flex justify-between items-center mt-8">
-                <CardItem
-                  translateZ={20}
-                  as="button"
-                  className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
-                >
-                  Try now →
-                </CardItem>
-                <CardItem
-                  translateZ={20}
-                  as="button"
-                  className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
-                >
-                  Get Started Now
-                </CardItem>
-              </div>
-            </CardBody>
-          </CardContainer>
-          <CardContainer className="inter-var ">
-            <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-neutral-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full md:!w-[350px] h-auto rounded-xl p-6 border">
-              <CardItem
-                translateZ="50"
-                className="text-xl font-bold text-neutral-600 dark:text-white "
-              >
-                Unlimited
-                <h2 className="text-6xl ">$99</h2>
-              </CardItem>
-              <CardItem
-                translateZ="60"
-                className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
-              >
-                Get a glimpse of what our software is capable of. Just a heads
-                up {"you'll"} never leave us after this!
-                <ul className="my-4 flex flex-col gap-2">
-                  <li className="flex items-center gap-2">
-                    <CheckIcon />3 Free automations
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckIcon />
-                    100 tasks per month
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckIcon />
-                    Two-step Actions
-                  </li>
-                </ul>
-              </CardItem>
-              <div className="flex justify-between items-center mt-8">
-                <CardItem
-                  translateZ={20}
-                  as="button"
-                  className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
-                >
-                  Try now →
-                </CardItem>
-                <CardItem
-                  translateZ={20}
-                  as="button"
-                  className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
-                >
-                  Get Started Now
-                </CardItem>
-              </div>
-            </CardBody>
-          </CardContainer>
-        </div> */}
-
       </section>
+
+      {/* Input Field Section */}
+      <div className="relative flex items-center justify-center">
+        {/* Grid Background */}
+        <div className="absolute z-[-1] h-[800px] w-[800px] bg-[linear-gradient(to_right,#0f0f10_1px,transparent_1px),linear-gradient(to_bottom,#0f0f10_1px,transparent_1px)] bg-center bg-[size:1rem_1rem] blur-[1px]"></div>
+
+        <div id="poda" className="relative flex items-center justify-center">
+          {/* Glow */}
+          <div className="absolute z-[-1] max-h-[130px] max-w-[654px] h-full w-full overflow-hidden rounded-[12px] blur-[30px] opacity-40 glow"></div>
+
+          {/* Dark Border Backgrounds */}
+          <div className="absolute z-[-1] max-h-[65px] max-w-[612px] h-full w-full overflow-hidden rounded-[12px] blur-[3px] darkBorderBg"></div>
+          <div className="absolute z-[-1] max-h-[65px] max-w-[612px] h-full w-full overflow-hidden rounded-[12px] blur-[3px] darkBorderBg"></div>
+          <div className="absolute z-[-1] max-h-[65px] max-w-[612px] h-full w-full overflow-hidden rounded-[12px] blur-[3px] darkBorderBg"></div>
+
+          {/* White Layer */}
+          <div className="absolute z-[-1] max-h-[63px] max-w-[607px] h-full w-full overflow-hidden rounded-[10px] blur-[2px] white"></div>
+
+          {/* Border */}
+          <div className="absolute z-[-1] max-h-[59px] max-w-[603px] h-full w-full overflow-hidden rounded-[11px] blur-[0.5px] border"></div>
+
+          {/* Main Input Container */}
+          <div id="main" className="relative">
+            <input
+              placeholder="Enter your pincode"
+              type="text"
+              name="text"
+              className="h-[56px] w-[601px] rounded-[10px] border-none bg-[#010201] px-[59px] text-[18px] text-white placeholder:text-[#c0b9c0] focus:outline-none"
+            />
+
+            {/* Input Mask */}
+            <div
+              id="input-mask"
+              className="pointer-events-none absolute top-[18px] left-[70px] h-[20px] w-[200px] bg-[linear-gradient(90deg,transparent,black)]"
+            ></div>
+
+            {/* Pink Mask */}
+            <div
+              id="pink-mask"
+              className="pointer-events-none absolute top-[10px] left-[5px] h-[20px] w-[60px] bg-[#cf30aa] blur-[20px] opacity-80 transition-all duration-2000"
+            ></div>
+
+            {/* Filter Border */}
+            <div className="absolute top-[7px] right-[7px] h-[42px] w-[40px] overflow-hidden rounded-[10px] filterBorder"></div>
+
+            {/* Filter Icon */}
+            <div
+              id="filter-icon"
+              className="absolute top-[8px] right-[8px] z-[2] flex h-full w-full max-h-[40px] max-w-[38px] items-center justify-center overflow-hidden rounded-[10px] border border-transparent bg-gradient-to-b from-[#161329] via-black to-[#1d1b4b] isolation-auto"
+              onClick={fetchApi} // Attach the onClick handler here
+            >
+              {/* SVG content */}
+            </div>
+
+            {/* Search Icon */}
+            <div id="search-icon" className="absolute left-[20px] top-[15px]">
+              {/* SVG content */}
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
