@@ -173,6 +173,9 @@ export default function Home() {
           {predictedCrimeLevel && (
             <div className="mt-12 text-lg md:text-2xl font-bold dark:text-white ">
               Predicted Crime Level for {pincode}: {predictedCrimeLevel}
+              {/* Image added below */}
+              <img src="/pi.jpg" alt="Predicted Crime Level" className="mt-4" />
+              <img src="/chart.jpg" alt="Predicted Crime Level" className="mt-4" />
             </div>
           )}
         </div>
