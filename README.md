@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Crime Predictions
+=================
+Authors:
+    Ragav Bansal
+    Aarav Smit Matalia
+    Manan Gulati
+    Olivia Pratt
 
-## Getting Started
+Citation and Open Source Works Used
+=================
 
-First, run the development server:
+Scikit-learn: Pedregosa et al. (2011). http://www.jmlr.org/papers/volume12/pedregosa11a/pedregosa11a.pdf
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Random Decision Forests: Ho, T. K. (1995). https://ieeexplore.ieee.org/document/598994 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Understanding TypeScript: Bierman et al. (2014). https://link.springer.com/chapter/10.1007/978-3-662-44202-9_14
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Tailwind CSS: https://tailwindcss.com/docs
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Next.js: https://nextjs.org/docs
 
-## Learn More
+React: https://reactjs.org/docs/getting-started.html
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Problem Statement
+=================
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+With the rise of online booking services for housing and lodging, gauging the safety of a neighborhood has become increasingly challenging. This inspired us to create *ZipWatch*, a simple and user-friendly tool designed to analyze crime statistics in any area, helping users make more informed decisions.
 
-## Deploy on Vercel
+Approach
+========
+ZipWatch allows users to input a zip code and receive comprehensive reports on local crime activity. These reports feature a tier system to assess crime levels and provide both quantitative data, such as crime rates, and qualitative insights into crime trends related to violent crime, theft, and property crime. Additionally, we ensure that users are informed about local community resources and social services to support their safety and well-being.
+At ZipWatch, we are dedicated to fostering an inclusive platform that empowers all individuals, regardless of their background or abilities, to make informed decisions about their safety. We recognize that accessibility and inclusivity are vital for ensuring that our crime analysis tools can be utilized by everyone. As part of our commitment to Diversity, Equity, and Inclusion, we present both visual and text representations of crime data, making our platform more accessible to individuals with diverse needs, including those who rely on assistive technologies.In addition to providing critical information about crime statistics, we understand that true safety goes beyond data. We aim to support users holistically by offering information on local emergency services.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Future Work
+===========
+Our goal is to expand ZipWatch into a Google Chrome extension, allowing users to seamlessly access crime reports while browsing booking websites. We also plan to integrate more extensive crime datasets to support nationwide use, giving users reliable crime insights across the country.
