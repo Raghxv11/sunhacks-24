@@ -1,6 +1,5 @@
 import { ThemeProvider } from "@/providers/theme-provider";
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import { DM_Sans } from 'next/font/google'
 import "./globals.css";
 

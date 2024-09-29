@@ -1,14 +1,13 @@
+"use client";
+
 import Navbar from "@/components/global/navbar";
 
-import { CardBody, CardContainer, CardItem } from "@/components/global/3d-card";
 import { HeroParallax } from "@/components/global/connect-parallax";
 import { ContainerScroll } from "@/components/global/container-scroll-animation";
 import { InfiniteMovingCards } from "@/components/global/infinite-moving-cards";
 import { LampComponent } from "@/components/global/lamp";
 import { Button } from "@/components/ui/button";
 import { clients, products } from "@/lib/constants";
-import { CheckIcon } from "lucide-react";
-import Image from "next/image";
 
 export default function Home() {
   //WIP: remove fault IMAge for home page
@@ -25,7 +24,23 @@ export default function Home() {
                   size={"lg"}
                   className="p-8 mb-8 md:mb-0 text-2xl w-full sm:w-fit border-t-2 rounded-full border-[#4D4D4D] bg-[#1F1F1F] hover:bg-white group transition-all flex items-center justify-center gap-4 hover:shadow-xl hover:shadow-neutral-500 duration-500"
                 >
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-neutral-500 to-neutral-600  md:text-center font-sans group-hover:bg-gradient-to-r group-hover:from-black goup-hover:to-black">
+                  <span
+                    className="bg-clip-text text-transparent bg-gradient-to-r from-neutral-500 to-neutral-600  md:text-center font-sans group-hover:bg-gradient-to-r group-hover:from-black goup-hover:to-black"
+                    onClick={async () => {
+                      const data = await fetch("/api/test", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          crimeDataUrl:
+                            "https://firebasestorage.googleapis.com/v0/b/binsr-484d7.appspot.com/o/crime-data_crime-data_crimestat.csv?alt=media&token=21120ded-08ae-464c-a9ca-4f88b3ad491f",
+                        }),
+                      });
+                      const json = await data.json();
+                      console.log(json);
+                    }}
+                  >
                     Get Demo
                   </span>
                 </Button>
@@ -191,7 +206,6 @@ export default function Home() {
             </CardBody>
           </CardContainer>
         </div> */}
-        
       </section>
     </main>
   );
