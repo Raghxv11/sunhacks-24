@@ -7,7 +7,7 @@ import { ContainerScroll } from "@/components/global/container-scroll-animation"
 import { InfiniteMovingCards } from "@/components/global/infinite-moving-cards";
 import { LampComponent } from "@/components/global/lamp";
 import { Button } from "@/components/ui/button";
-import { clients, products } from "@/lib/constants";
+import { products } from "@/lib/constants";
 
 export default function Home() {
   //WIP: remove fault IMAge for home page
@@ -52,13 +52,13 @@ export default function Home() {
           />
         </div>
       </section>
-      <InfiniteMovingCards
+      {/* <InfiniteMovingCards
         className="md:mt-[18rem] mt-[-100px]"
         items={clients}
         direction="right"
         speed="slow"
-      />
-      <section>
+      /> */}
+      <section className="md:mt-[18rem] mt-[-100px]">
         <HeroParallax products={products}></HeroParallax>
       </section>
       <section>
@@ -206,6 +206,7 @@ export default function Home() {
             </CardBody>
           </CardContainer>
         </div> */}
+
       </section>
     </main>
   );
