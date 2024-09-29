@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 import { products } from "@/lib/constants";
 
 export default function Home() {
-  // Define the API fetching function
-  const fetchApi = async () => {
-    const data = await fetch("/api/test", {
+  // Define the API fetching function without async/await
+  const fetchApi = () => {
+    fetch("/api/test", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,9 +19,15 @@ export default function Home() {
         crimeDataUrl:
           "https://firebasestorage.googleapis.com/v0/b/binsr-484d7.appspot.com/o/crime-data_crime-data_crimestat.csv?alt=media&token=21120ded-08ae-464c-a9ca-4f88b3ad491f",
       }),
-    });
-    const json = await data.json();
-    console.log(json);
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json);
+        // Handle the fetched data as needed
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   };
 
   return (
@@ -33,13 +39,12 @@ export default function Home() {
           <ContainerScroll
             titleComponent={
               <div className="flex flex-col items-center">
+                {/* Removed onClick handler from the Get Demo button */}
                 <Button
                   size={"lg"}
                   className="group mb-8 flex w-full items-center justify-center gap-4 rounded-full border-t-2 border-[#4D4D4D] bg-[#1F1F1F] p-8 text-2xl transition-all duration-500 hover:bg-white hover:shadow-xl hover:shadow-neutral-500 sm:w-fit md:mb-0"
                 >
-                  <span
-                    className="bg-gradient-to-r from-neutral-500 to-neutral-600 bg-clip-text font-sans text-transparent group-hover:bg-gradient-to-r group-hover:from-black group-hover:to-black md:text-center"
-                  >
+                  <span className="bg-gradient-to-r from-neutral-500 to-neutral-600 bg-clip-text font-sans text-transparent group-hover:bg-gradient-to-r group-hover:from-black group-hover:to-black md:text-center">
                     Get Demo
                   </span>
                 </Button>
@@ -58,9 +63,9 @@ export default function Home() {
       <section>
         <LampComponent />
       </section>
-
+      
       {/* Input Field Section */}
-      <div className="relative flex items-center justify-center">
+      <div className="relative mt-10 flex items-center justify-center">
         {/* Grid Background */}
         <div className="absolute z-[-1] h-[800px] w-[800px] bg-[linear-gradient(to_right,#0f0f10_1px,transparent_1px),linear-gradient(to_bottom,#0f0f10_1px,transparent_1px)] bg-center bg-[size:1rem_1rem] blur-[1px]"></div>
 
@@ -82,7 +87,7 @@ export default function Home() {
           {/* Main Input Container */}
           <div id="main" className="relative">
             <input
-              placeholder="Enter your pincode"
+              placeholder="Enter Pincode..."
               type="text"
               name="text"
               className="h-[56px] w-[601px] rounded-[10px] border-none bg-[#010201] px-[59px] text-[18px] text-white placeholder:text-[#c0b9c0] focus:outline-none"
@@ -97,7 +102,7 @@ export default function Home() {
             {/* Pink Mask */}
             <div
               id="pink-mask"
-              className="pointer-events-none absolute top-[10px] left-[5px] h-[20px] w-[60px] bg-[#cf30aa] blur-[20px] opacity-80 transition-all duration-2000"
+              className="pointer-events-none absolute top-[10px] left-[5px] h-[20px] w-[30px] bg-[#cf30aa] blur-[20px] opacity-80 transition-all duration-2000"
             ></div>
 
             {/* Filter Border */}
