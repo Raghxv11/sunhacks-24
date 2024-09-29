@@ -10,6 +10,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [pincode, setPincode] = useState("");
+  const [predictedCrimeLevel, setPredictedCrimeLevel] = useState<string | null>(null);
 
   const fetchApi = async (pincode: string) => {
     fetch("/api/test", {
@@ -26,10 +27,23 @@ export default function Home() {
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
-        // Handle the fetched data as needed
+        if (
+          json.status === 200 &&
+          json.data &&
+          json.data.predictedCrimeLevels &&
+          json.data.predictedCrimeLevels.length > 0
+        ) {
+          // Assuming you want the first predicted crime level
+          const predictedLevel = json.data.predictedCrimeLevels[0].PredictedCrimeLevel;
+          setPredictedCrimeLevel(predictedLevel);
+        } else {
+          // Handle the case where no data is returned
+          setPredictedCrimeLevel("No data available");
+        }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setPredictedCrimeLevel("Error fetching data");
       });
   };
 
@@ -67,11 +81,11 @@ export default function Home() {
       </section>
 
       {/* Input Field Section */}
-      <div className="relative mt-10 flex items-center justify-center">
+      <div className="relative mt-10 flex flex-col items-center justify-center">
         {/* Grid Background */}
         <div className="absolute z-[-1] h-[800px] w-[800px] bg-[linear-gradient(to_right,#0f0f10_1px,transparent_1px),linear-gradient(to_bottom,#0f0f10_1px,transparent_1px)] bg-center bg-[size:1rem_1rem] blur-[1px]"></div>
 
-        <div id="poda" className="relative flex items-center justify-center">
+        <div id="poda" className="relative flex flex-col items-center justify-center">
           {/* Glow */}
           <div className="absolute z-[-1] max-h-[130px] max-w-[654px] h-full w-full overflow-hidden rounded-[12px] blur-[30px] opacity-40 glow"></div>
 
@@ -116,16 +130,51 @@ export default function Home() {
             <div
               id="filter-icon"
               className="absolute top-[8px] right-[8px] z-[2] flex h-full w-full max-h-[40px] max-w-[38px] items-center justify-center overflow-hidden rounded-[10px] border border-transparent bg-gradient-to-b from-[#161329] via-black to-[#1d1b4b] isolation-auto"
-              onClick={async () => await fetchApi(pincode)} // Pass pincode here
+              onClick={async () => await fetchApi(pincode)}
             >
               {/* SVG content */}
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#ffffff"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-search"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
             </div>
 
             {/* Search Icon */}
             <div id="search-icon" className="absolute left-[20px] top-[15px]">
               {/* SVG content */}
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#ffffff"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-map-pin"
+              >
+                <path d="M21 10c0 6-9 13-9 13s-9-7-9-13a9 9 0 1 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
             </div>
           </div>
+
+          {/* Display Predicted Crime Level */}
+          {predictedCrimeLevel && (
+            <div className="mt-4 text-lg md:text-2xl font-bold dark:text-white ">
+              Predicted Crime Level for {pincode}: {predictedCrimeLevel}
+            </div>
+          )}
         </div>
       </div>
     </main>
