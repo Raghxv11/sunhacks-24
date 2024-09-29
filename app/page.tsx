@@ -171,7 +171,7 @@ export default function Home() {
 
           {/* Display Predicted Crime Level */}
           {predictedCrimeLevel && (
-            <div className="mt-4 text-lg md:text-2xl font-bold dark:text-white ">
+            <div className="mt-12 text-lg md:text-2xl font-bold dark:text-white ">
               Predicted Crime Level for {pincode}: {predictedCrimeLevel}
             </div>
           )}
